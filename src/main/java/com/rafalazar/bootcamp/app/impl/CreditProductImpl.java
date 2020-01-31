@@ -1,6 +1,7 @@
 package com.rafalazar.bootcamp.app.impl;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,13 @@ public class CreditProductImpl implements CreditProductService{
 		}else {
 			cp.setProductName(cp.getProductName());
 		}
+		//NumberProduct
+		if(cp.getNumberAccount() == null) {
+			cp.setNumberAccount(UUID.randomUUID().toString());
+		}else {
+			cp.setNumberAccount(cp.getNumberAccount());
+		}
+		
 		//DniOwner
 		if(cp.getDniOwner() == null) {
 			cp.setDniOwner("-");
@@ -129,6 +137,12 @@ public class CreditProductImpl implements CreditProductService{
 					}else {
 						c.setProductName(cp.getProductName());
 					}
+					//NumberAccount
+					if(cp.getNumberAccount() == null) {
+						c.setNumberAccount(c.getNumberAccount());
+					}else {
+						c.setNumberAccount(UUID.randomUUID().toString());
+					}
 					//DniOwner
 					if(cp.getDniOwner() == null) {
 						c.setDniOwner(c.getDniOwner());
@@ -175,6 +189,23 @@ public class CreditProductImpl implements CreditProductService{
 	@Override
 	public Mono<ClientDto> createById(String id) {
 		return client.createById(id);
+	}
+
+	//------------------------------------->
+	// Métodos propios
+	@Override
+	public Mono<CreditProduct> deposit(Double amount, String id) {
+		return repo.findById(id)
+				.flatMap(c -> {
+					if((c.getBalance()+amount) > c.getCreditAmount()) {
+						return Mono.error(new InterruptedException("No puede superar su crédito"));
+					}else {
+						c.setBalance(c.getBalance()+amount);
+						c.setConsume(c.getConsume()-amount);
+						
+						return repo.save(c);
+					}
+				});
 	}
 
 }

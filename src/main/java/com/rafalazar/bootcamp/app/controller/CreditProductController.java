@@ -2,6 +2,7 @@ package com.rafalazar.bootcamp.app.controller;
 
 import java.net.URI;
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -96,6 +97,8 @@ public class CreditProductController {
 					cp.setTypeOwner(c.getType());
 					//productName
 					cp.setProductName(cp.getProductName());
+					//numberAccount
+					cp.setNumberAccount(UUID.randomUUID().toString());
 					//dniOwner
 					cp.setDniOwner(c.getNumDoc());
 					//creditAmount

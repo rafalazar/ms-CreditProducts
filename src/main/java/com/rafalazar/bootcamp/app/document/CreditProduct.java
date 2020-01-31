@@ -18,6 +18,7 @@ public class CreditProduct {
 	private String bank;
 	private String typeOwner;
 	private String productName;
+	private String numberAccount;
 	private String dniOwner;
 	private Double creditAmount;
 	private Double balance;

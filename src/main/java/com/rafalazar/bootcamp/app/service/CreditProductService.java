@@ -19,6 +19,10 @@ public interface CreditProductService {
 	//ELIMINAR
 	public Mono<Void> delete(CreditProduct cp);
 	
+	//------------------->
+	//Métodos propios
+	public Mono<CreditProduct> deposit(Double amount, String id); //Experimental
+	
 	
 	//------------------->
 	//Métodos del webClient
