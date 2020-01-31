@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Date;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,8 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/creditProduct")
 public class CreditProductController {
+	
+	private static final Logger log = LoggerFactory.getLogger(CreditProductController.class);
 	
 	@Autowired
 	private CreditProductService service;
@@ -126,4 +130,19 @@ public class CreditProductController {
 					
 				});
 	}
+	
+	//------------------------------------------------------->
+	// ------------ Métodos propios ----------------------//
+	@PutMapping("/deposit/{amount}/{id}")
+	public Mono<CreditProduct> deposit(@PathVariable Double amount, @PathVariable("id") String id){
+		log.info("entró!");
+		return service.deposit(amount, id);
+	}
+	
+	@PutMapping("/retiro/{amount}/{id}")
+	public Mono<CreditProduct> retiro(@PathVariable Double amount, @PathVariable("id") String id){
+		log.info("entró!");
+		return service.retiro(amount, id);
+	}
+	
 }

@@ -23,6 +23,8 @@ public interface CreditProductService {
 	//Métodos propios
 	public Mono<CreditProduct> deposit(Double amount, String id); //Experimental
 	
+	public Mono<CreditProduct> retiro(Double amount, String id); //Experimental
+	
 	
 	//------------------->
 	//Métodos del webClient

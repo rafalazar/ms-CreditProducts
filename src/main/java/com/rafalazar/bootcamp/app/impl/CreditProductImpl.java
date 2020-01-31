@@ -208,4 +208,21 @@ public class CreditProductImpl implements CreditProductService{
 				});
 	}
 
+	@Override
+	public Mono<CreditProduct> retiro(Double amount, String id) {
+		return repo.findById(id)
+				.flatMap(c -> {
+					if(amount > c.getCreditAmount()) {
+						return Mono.error(new InterruptedException("No puede retirar monto superior a su crédito"));
+					}else if(amount > c.getBalance()) {
+						return Mono.error(new InterruptedException("No puede retirar más dinero."));
+					}else {
+						c.setBalance(c.getBalance() - amount);
+						c.setConsume(c.getConsume() + amount);
+						
+						return repo.save(c);
+					}
+				});
+	}
+
 }
