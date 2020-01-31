@@ -5,7 +5,9 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rafalazar.bootcamp.app.client.ClienteClient;
 import com.rafalazar.bootcamp.app.document.CreditProduct;
+import com.rafalazar.bootcamp.app.dto.ClientDto;
 import com.rafalazar.bootcamp.app.repository.CreditProductRepository;
 import com.rafalazar.bootcamp.app.service.CreditProductService;
 
@@ -17,6 +19,9 @@ public class CreditProductImpl implements CreditProductService{
 	
 	@Autowired
 	private CreditProductRepository repo;
+	
+	@Autowired
+	private ClienteClient client;
 
 	@Override
 	public Flux<CreditProduct> findAll() {
@@ -156,6 +161,20 @@ public class CreditProductImpl implements CreditProductService{
 	@Override
 	public Mono<Void> delete(CreditProduct cp) {
 		return repo.delete(cp);
+	}
+
+	
+	//--------------------------------------------->
+	//Métodos del webClient
+	
+	@Override
+	public Flux<ClientDto> findAllClients() {
+		return client.findAllClients();
+	}
+
+	@Override
+	public Mono<ClientDto> createById(String id) {
+		return client.createById(id);
 	}
 
 }

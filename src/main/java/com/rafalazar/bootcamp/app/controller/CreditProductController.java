@@ -1,6 +1,7 @@
 package com.rafalazar.bootcamp.app.controller;
 
 import java.net.URI;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rafalazar.bootcamp.app.document.CreditProduct;
+import com.rafalazar.bootcamp.app.dto.ClientDto;
 import com.rafalazar.bootcamp.app.service.CreditProductService;
 
 import reactor.core.publisher.Flux;
@@ -63,5 +65,62 @@ public class CreditProductController {
 			return service.delete(c).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
 		}).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 	}
-
+	
+	//---------------------------------------->>>>>>>>>>>
+	// Métodos de webClient
+	
+	@GetMapping("/findAllClients")
+	Flux<ClientDto> findAllClients() {
+		return service.findAllClients();
+	}
+	
+	@GetMapping("/createById/{id}")
+	Mono<CreditProduct> createById(@PathVariable("id") String id,@RequestBody CreditProduct cp){
+		if(cp.getJoinDate() == null) {
+			cp.setJoinDate(new Date());
+		}else {
+			cp.setJoinDate(cp.getJoinDate());
+		}
+		
+		if(cp.getExpirationDate() == null) {
+			cp.setExpirationDate(new Date());
+		}else {
+			cp.setExpirationDate(cp.getExpirationDate());
+		}
+		
+		return service.createById(id)
+				.flatMap(c -> {
+					//Bank
+					cp.setBank(c.getBank());
+					//typeOwner
+					cp.setTypeOwner(c.getType());
+					//productName
+					cp.setProductName(cp.getProductName());
+					//dniOwner
+					cp.setDniOwner(c.getNumDoc());
+					//creditAmount
+					if(cp.getCreditAmount() == null) {
+						cp.setCreditAmount(0.0);
+					}else {
+						cp.setCreditAmount(cp.getCreditAmount());
+					}
+					
+					//balance
+					if(cp.getBalance() == null) {
+						cp.setBalance(cp.getCreditAmount());
+					}else {
+						cp.setBalance(cp.getBalance());
+					}
+					
+					//consume
+					if(cp.getConsume() == null) {
+						cp.setConsume(0.0);
+					}else {
+						cp.setConsume(cp.getConsume());
+					}
+					
+					return service.save(cp);
+					
+				});
+	}
 }
