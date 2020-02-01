@@ -134,15 +134,15 @@ public class CreditProductController {
 	//------------------------------------------------------->
 	// ------------ Métodos propios ----------------------//
 	@PutMapping("/deposit/{amount}/{id}")
-	public Mono<CreditProduct> deposit(@PathVariable Double amount, @PathVariable("id") String id){
+	public Mono<CreditProduct> deposit(@PathVariable String amount, @PathVariable("id") String id){
 		log.info("entró!");
-		return service.deposit(amount, id);
+		return service.deposit(Double.parseDouble(amount), id);
 	}
 	
 	@PutMapping("/retiro/{amount}/{id}")
-	public Mono<CreditProduct> retiro(@PathVariable Double amount, @PathVariable("id") String id){
+	public Mono<CreditProduct> retiro(@PathVariable String amount, @PathVariable("id") String id){
 		log.info("entró!");
-		return service.retiro(amount, id);
+		return service.retiro(Double.parseDouble(amount), id);
 	}
 	
 }
