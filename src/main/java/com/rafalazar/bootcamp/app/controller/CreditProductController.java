@@ -133,12 +133,23 @@ public class CreditProductController {
 	
 	//------------------------------------------------------->
 	// ------------ Métodos propios ----------------------//
+	
+	//Buscar por número de cuenta
+	@GetMapping("/findByNumAccount/{numberAccount}")
+	public Mono<ResponseEntity<CreditProduct>> findByNumberAccount(@PathVariable("numberAccount") String numberAccount){
+		return service.findByNumberAccount(numberAccount)
+				.map(c -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(c))
+				.defaultIfEmpty(ResponseEntity.notFound().build());
+	}
+	
+	//Depositar
 	@PutMapping("/deposit/{amount}/{id}")
 	public Mono<CreditProduct> deposit(@PathVariable Double amount, @PathVariable("id") String id){
 		log.info("entró!");
 		return service.deposit(amount, id);
 	}
 	
+	//Retirar
 	@PutMapping("/retiro/{amount}/{id}")
 	public Mono<CreditProduct> retiro(@PathVariable Double amount, @PathVariable("id") String id){
 		log.info("entró!");

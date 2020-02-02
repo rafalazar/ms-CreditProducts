@@ -194,6 +194,11 @@ public class CreditProductImpl implements CreditProductService{
 	//------------------------------------->
 	// Métodos propios
 	@Override
+	public Mono<CreditProduct> findByNumberAccount(String numberAccount) {
+		return repo.findByNumberAccount(numberAccount);
+	}
+	
+	@Override
 	public Mono<CreditProduct> deposit(Double amount, String id) {
 		return repo.findById(id)
 				.flatMap(c -> {
