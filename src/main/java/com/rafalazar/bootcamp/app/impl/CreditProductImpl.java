@@ -199,8 +199,8 @@ public class CreditProductImpl implements CreditProductService{
 	}
 	
 	@Override
-	public Mono<CreditProduct> deposit(Double amount, String id) {
-		return repo.findById(id)
+	public Mono<CreditProduct> depositC(Double amount, String numberAccount) {
+		return repo.findByNumberAccount(numberAccount)
 				.flatMap(c -> {
 					if((c.getBalance()+amount) > c.getCreditAmount()) {
 						return Mono.error(new InterruptedException("No puede superar su crédito"));
@@ -214,8 +214,8 @@ public class CreditProductImpl implements CreditProductService{
 	}
 
 	@Override
-	public Mono<CreditProduct> retiro(Double amount, String id) {
-		return repo.findById(id)
+	public Mono<CreditProduct> retiroC(Double amount, String numberAccount) {
+		return repo.findByNumberAccount(numberAccount)
 				.flatMap(c -> {
 					if(amount > c.getCreditAmount()) {
 						return Mono.error(new InterruptedException("No puede retirar monto superior a su crédito"));

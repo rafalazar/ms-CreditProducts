@@ -23,9 +23,9 @@ public interface CreditProductService {
 	//Métodos propios
 	public Mono<CreditProduct> findByNumberAccount(String numberAccount);
 	
-	public Mono<CreditProduct> deposit(Double amount, String id); //Experimental
+	public Mono<CreditProduct> depositC(Double amount, String numberAccount); //Experimental
 	
-	public Mono<CreditProduct> retiro(Double amount, String id); //Experimental
+	public Mono<CreditProduct> retiroC(Double amount, String numberAccount); //Experimental
 	
 	
 	//------------------->

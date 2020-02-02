@@ -143,17 +143,17 @@ public class CreditProductController {
 	}
 	
 	//Depositar
-	@PutMapping("/deposit/{amount}/{id}")
-	public Mono<CreditProduct> deposit(@PathVariable String amount, @PathVariable("id") String id){
+	@PutMapping("/depositC/{amount}/{numberAccount}")
+	public Mono<CreditProduct> depositC(@PathVariable String amount, @PathVariable("numberAccount") String numberAccount){
 		log.info("entró!");
-		return service.deposit(Double.parseDouble(amount), id);
+		return service.depositC(Double.parseDouble(amount), numberAccount);
 	}
 	
 	//Retirar
-	@PutMapping("/retiro/{amount}/{id}")
-	public Mono<CreditProduct> retiro(@PathVariable String amount, @PathVariable("id") String id){
+	@PutMapping("/retiroC/{amount}/{numberAccount}")
+	public Mono<CreditProduct> retiroC(@PathVariable String amount, @PathVariable("numberAccount") String numberAccount){
 		log.info("entró!");
-		return service.retiro(Double.parseDouble(amount), id);
+		return service.retiroC(Double.parseDouble(amount), numberAccount);
 	}
 	
 }
