@@ -103,6 +103,9 @@ public class CreditProductController {
 					cp.setProductName(cp.getProductName());
 					//numberAccount
 					cp.setNumberAccount(UUID.randomUUID().toString());
+					//Nuevo campo 
+					//nameOwner
+					cp.setNameOwner(c.getFullName());
 					//dniOwner
 					cp.setDniOwner(c.getNumDoc());
 					//creditAmount

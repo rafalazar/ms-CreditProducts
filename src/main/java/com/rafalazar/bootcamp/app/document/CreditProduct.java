@@ -19,6 +19,9 @@ public class CreditProduct {
 	private String typeOwner;
 	private String productName;
 	private String numberAccount;
+	//Campo nuevo
+	private String nameOwner;
+	//
 	private String dniOwner;
 	private Double creditAmount;
 	private Double balance;
