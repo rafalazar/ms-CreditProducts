@@ -2,6 +2,7 @@ package com.rafalazar.bootcamp.app;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.assertj.core.api.Assertions;
@@ -42,6 +43,16 @@ class CreditServiceTest {
 			
 			Assertions.assertThat(credit.size()>0).isTrue();
 		});
+	}
+	
+	@Test
+	void findByIdCredit() {
+		CreditProduct credit = service.findById("5e387f55760005456184707b").block();
+		client.get().uri("/creditProduct/findById/{id}",Collections.singletonMap("id", credit.getId()))
+		.accept(MediaType.APPLICATION_JSON)
+		.exchange()
+		.expectStatus().isOk()
+		.expectHeader().contentType(MediaType.APPLICATION_JSON);
 	}
 
 }
